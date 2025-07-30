@@ -1,104 +1,252 @@
-/* CSS Variables for Theme Management */
+/* ------ Minimalistic Light Theme & Tic Tac Toe Styles ------ */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Main Tic Tac Toe palette */
+  --primary: #1976d2;
+  --secondary: #424242;
+  --accent: #ff7043;
+  --bg-main: #fff;
+  --bg-box: #f6f8fa;
+  --text-main: #222a35;
+  --text-light: #999;
+  --border-main: #e5e8eb;
+  --win-bg: #ffeadd;
+  --win-color: #ff7043;
+  --btn-bg: #1976d2;
+  --btn-txt: #fff;
+  --btn-bg-alt: #f9fafc;
+  --btn-txt-alt: #222a35;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+/* App wrapper */
+.ttt-app {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+  background: var(--bg-main);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  transition: background 0.2s;
+}
+
+/* Game layout is always centered */
+.ttt-game-container {
+  background: var(--bg-box);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(52,96,149,0.05);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 64px 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 340px;
+  max-width: 370px;
+}
+
+.ttt-title {
+  font-size: 2.25rem;
+  letter-spacing: -1px;
+  margin-bottom: 1.1rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.ttt-info-bar {
+  width: 98%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+.ttt-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 55px;
+  opacity: 0.8;
+  font-weight: 400;
+}
+.ttt-player.active {
+  opacity: 1;
+  font-weight: 700;
+  color: var(--primary);
+}
+.ttt-px,
+.ttt-po {
+  font-size: 1.4rem;
+  letter-spacing: 0.07em;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.ttt-px { color: var(--primary);}
+.ttt-po { color: var(--accent);}
+.ttt-score {
+  font-size: 1.15rem;
+  font-weight: 500;
+  background: var(--bg-main);
+  border-radius: 8px;
+  padding: 2px 16px;
+  margin-top: 2px;
+  box-shadow: 0 2px 6px rgba(25,118,210,0.03);
+}
+
+.ttt-status {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.13rem;
+  color: var(--secondary);
+  min-width: 125px;
+  margin: 0 10px;
+}
+.ttt-winner-ind {
+  color: var(--win-color);
+  font-weight: 700;
+  background: var(--win-bg);
+  border-radius: 6px;
+  padding: 0 10px;
+}
+.ttt-tie-ind {
+  color: var(--accent);
+  font-weight: 700;
+  background: #fff9f6;
+  border-radius: 6px;
+  padding: 0 10px;
+}
+
+/* Tic Tac Toe Board */
+.ttt-board {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-main);
+  border-radius: 15px;
+  border: 1.5px solid var(--border-main);
+  box-shadow: 0 3px 11px rgba(25,118,210,0.04);
+  margin: 22px 0 8px 0;
+  padding: 4px 4px;
+}
+.ttt-row {
+  display: flex;
+  flex-direction: row;
+}
+.ttt-square {
+  width: 72px;
+  height: 72px;
+  border: none;
+  border-right: 1.5px solid var(--border-main);
+  border-bottom: 1.5px solid var(--border-main);
+  background: var(--bg-main);
+  color: var(--secondary);
+  font-size: 2.35rem;
+  font-weight: 800;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s, box-shadow 0.2s;
   position: relative;
+  padding: 0;
+  user-select: none;
+  box-shadow: none;
+}
+.ttt-square:nth-child(3) {
+  border-right: none;
+}
+.ttt-row:last-child .ttt-square {
+  border-bottom: none;
+}
+.ttt-square:active {
+  background: #f8fafc;
+}
+.ttt-square.winner {
+  background: var(--win-bg);
+  color: var(--win-color);
+  box-shadow: 0 0 0 2px var(--accent) inset;
+  z-index: 1;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Controls */
+.ttt-controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 15px;
 }
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+.ttt-btn {
+  background: var(--btn-bg);
+  color: var(--btn-txt);
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 10px 22px;
+  font-size: 1.06rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: filter 0.2s, background 0.2s, color 0.2s;
+  box-shadow: 0 1.5px 6px rgba(25,118,210,0.06);
+}
+.ttt-btn:hover,
+.ttt-btn:focus {
+  filter: brightness(1.03) contrast(1.15);
+  background: #1556a8;
+}
+.ttt-btn-score {
+  background: var(--btn-bg-alt);
+  color: var(--btn-txt-alt);
+  border: 1px solid var(--border-main);
+}
+.ttt-btn-score:hover,
+.ttt-btn-score:focus {
+  background: #f1f3f7;
+  color: var(--btn-txt-alt);
+}
+.ttt-ties {
+  margin-top: 7px;
+  color: var(--text-light);
+  font-size: 1.03rem;
+  text-align: center;
+}
+.ttt-tie-count {
+  font-weight: bold;
+  color: var(--accent);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+/* Footer & Small text */
+.ttt-footer {
+  margin: 10px 0 18px 0;
+  font-size: 0.99rem;
+  color: #a0a8b9;
+}
+.ttt-footer-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 400;
+}
+.ttt-footer-link:hover,
+.ttt-footer-link:focus {
+  text-decoration: underline;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive for mobile */
+@media (max-width: 540px) {
+  .ttt-game-container {
+    min-width: 100vw;
+    max-width: 97vw;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1.3rem 2px 2rem 2px;
+    margin-top: 20px;
   }
-  to {
-    transform: rotate(360deg);
+  .ttt-board {
+    padding: 3px 0;
   }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .ttt-square {
+    width: 55px;
+    height: 55px;
+    font-size: 1.65rem;
+  }
+  .ttt-info-bar {
+    min-width: 0;
+    font-size: 1.02rem;
   }
 }
